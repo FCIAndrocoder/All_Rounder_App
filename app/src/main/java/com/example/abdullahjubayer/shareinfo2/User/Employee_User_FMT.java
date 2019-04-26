@@ -110,11 +110,6 @@ public class Employee_User_FMT extends Fragment {
 
 
                             }
-                            Collections.reverse(name);
-                            Collections.reverse(email);
-                            Collections.reverse(phone);
-                            Collections.reverse(picture);
-                            Collections.reverse(qualification);
                             aj_show_employee_to_user_adapter adapter = new aj_show_employee_to_user_adapter(getActivity(), name, email, phone, picture, qualification);
                             adapter.notifyDataSetChanged();
                             listView.setAdapter(adapter);

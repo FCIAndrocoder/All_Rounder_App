@@ -216,7 +216,7 @@ public class Notice_Admin_FMT extends Fragment {
 
         newContact.put("Message_image", image_url);
 
-        db.collection("All_Company Message").document(collection).collection("Message").document().set(newContact)
+        db.collection("All_Company_Message").document(collection).collection("Message").document().set(newContact)
 
                 .addOnSuccessListener(new OnSuccessListener< Void >() {
 

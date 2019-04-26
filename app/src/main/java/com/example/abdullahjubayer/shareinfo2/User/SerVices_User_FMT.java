@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,7 +36,6 @@ import java.util.ArrayList;
 public class SerVices_User_FMT extends Fragment {
 
     FirebaseFirestore db;
-    String company;
     ArrayList<String> job_title=new ArrayList<>();
     ArrayList<String>job_body=new ArrayList<>();
     ArrayList<String>job_image=new ArrayList<>();
@@ -65,17 +65,17 @@ public class SerVices_User_FMT extends Fragment {
         db = FirebaseFirestore.getInstance();
         listView=view.findViewById(R.id.user_show_jod);
 
-        Intent intent=getActivity().getIntent();
-        company=intent.getStringExtra("Company");
-        Log.i("Company User Reply",company);
+        String company=getActivity().getIntent().getStringExtra("Company").trim();
+        String image=getActivity().getIntent().getStringExtra("Image").trim();
 
-        getcompany_logo(company);
+        load_job_circular(image,company);
+
     }
 
 
 
 
-    public  void load_job_circular(final String company_logo){
+    public  void load_job_circular(final String company_logo, final String company){
 
 
         DocumentReference user = db.collection("All_Services").document(company);
@@ -105,6 +105,9 @@ public class SerVices_User_FMT extends Fragment {
                                 Log.i("user_reply aj_image",doc.get("Message").toString());
 
                             }
+                            Collections.reverse(job_title);
+                            Collections.reverse(job_body);
+                            Collections.reverse(job_image);
                             aj_job_adapter aj_job_adapter = new aj_job_adapter(getActivity(), job_title,job_body,job_image,company,company_logo);
                             aj_job_adapter.notifyDataSetChanged();
                             listView.setAdapter(aj_job_adapter);
@@ -125,36 +128,6 @@ public class SerVices_User_FMT extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getActivity(),"No Service Added",Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-
-
-    public  void getcompany_logo(String com){
-        progressBar.setVisibility(View.VISIBLE);
-        DocumentReference user = db.collection("All_Home_Page").document("HomePage Of_"+com);
-        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                if (task.isSuccessful()){
-
-                    DocumentSnapshot doc = task.getResult();
-
-                    String company_logo = doc.get("Company_logo").toString();
-                    load_job_circular(company_logo);
-
-                }
-                else {
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(getActivity(),"Company Not Found",Toast.LENGTH_LONG).show();
             }
         });
     }

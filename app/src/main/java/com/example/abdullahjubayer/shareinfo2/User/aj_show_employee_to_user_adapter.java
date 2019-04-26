@@ -20,6 +20,8 @@ import com.example.abdullahjubayer.shareinfo2.R;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.support.v4.content.ContextCompat.startActivity;
 
 public  class aj_show_employee_to_user_adapter extends BaseAdapter {
@@ -68,7 +70,7 @@ public  class aj_show_employee_to_user_adapter extends BaseAdapter {
         }
 
 
-        ImageView image=convertView.findViewById(R.id.employee_show_image);
+        CircleImageView image=convertView.findViewById(R.id.employee_show_image);
         TextView t_name=convertView.findViewById(R.id.employee_show_name);
         TextView t_email=convertView.findViewById(R.id.employee_show_email);
         TextView t_phone=convertView.findViewById(R.id.employee_show_phone);

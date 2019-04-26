@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PhotosUser_FMT extends Fragment {
 
@@ -95,6 +96,8 @@ public class PhotosUser_FMT extends Fragment {
                                 image.add(doc.get("Image").toString());
 
                             }
+                            Collections.reverse(title);
+                            Collections.reverse(image);
                             aj_user_photogallery_adapter adapter = new aj_user_photogallery_adapter(getContext(),title,image);
                             adapter.notifyDataSetChanged();
                             listView.setAdapter(adapter);

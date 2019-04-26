@@ -33,6 +33,7 @@ import com.github.ybq.android.spinkit.style.FadingCircle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -76,10 +77,10 @@ public class Home_User_FMT extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listView=view.findViewById(R.id.list_viewUHF);
 
+        listView=view.findViewById(R.id.list_viewUHF);
        db=FirebaseFirestore.getInstance();
-       sharedPreferences=getActivity().getSharedPreferences("com.abdullah.email", Context.MODE_PRIVATE);
+       sharedPreferences=getActivity().getSharedPreferences("com.abdullah.company", Context.MODE_PRIVATE);
 
         progressBar = (ProgressBar)view.findViewById(R.id.spin_kit_show_home_page_touserP);
         FadingCircle fadingCircle = new FadingCircle();
@@ -116,11 +117,11 @@ public class Home_User_FMT extends Fragment {
         progressBar.setVisibility(View.INVISIBLE);
 
         */
-
-loadData();
+        String company=getActivity().getIntent().getStringExtra("Company");
+        loadData(company);
     }
 
-    private void loadData() {
+    private void loadData(final String company) {
         progressBar.setVisibility(View.VISIBLE);
         DocumentReference user = db.collection("All_Home_Page").document();
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -129,7 +130,7 @@ loadData();
 
                 if (task.isSuccessful()) {
 
-                    db.collection("All_Home_Page").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    db.collection("All_Home_Page").document(company).collection("HomePage").addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                             title_.clear();

@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+
+import android.widget.Filterable;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,10 +25,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class aj_User_home_page_Adapter extends BaseAdapter {
+public class aj_User_home_page_Adapter extends BaseAdapter implements Filterable {
 
 
     Context context;
@@ -81,7 +87,7 @@ public class aj_User_home_page_Adapter extends BaseAdapter {
 
 
                     final String ttt=topic.replaceAll(" ",".");
-                   // Toast.makeText(context,ttt,Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(context,ttt,Toast.LENGTH_SHORT).show();
                     FirebaseMessaging.getInstance().subscribeToTopic(ttt)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -118,4 +124,41 @@ public class aj_User_home_page_Adapter extends BaseAdapter {
 
         return convertView;
     }
+
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            List<String> filteredList=new ArrayList<>();
+            if(constraint==null || constraint.length()==0){
+                filteredList.addAll(filteredList);
+            }else {
+                String filterPattern=constraint.toString().toLowerCase().trim();
+
+                for (String companyName : filteredList){
+                    if (companyName.toLowerCase().contains(filterPattern)){
+                        filteredList.add(companyName);
+                    }
+                }
+            }
+            FilterResults results=new FilterResults();
+            results.values=filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            title.clear();
+            title.addAll((Collection<? extends String>) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
 }

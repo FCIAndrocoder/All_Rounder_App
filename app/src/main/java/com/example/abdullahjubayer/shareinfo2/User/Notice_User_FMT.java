@@ -76,7 +76,7 @@ public class Notice_User_FMT extends Fragment {
     private void loaddata(final String com) {
 
         progressBar.setVisibility(View.VISIBLE);
-        DocumentReference user = db.collection("All_Company Message").document(com);
+        DocumentReference user = db.collection("All_Company_Message").document(com);
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -85,7 +85,7 @@ public class Notice_User_FMT extends Fragment {
 
                     DocumentSnapshot doc = task.getResult();
 
-                    db.collection("All_Company Message").document(com).collection("Message").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    db.collection("All_Company_Message").document(com).collection("Message").addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                             ser_title.clear();

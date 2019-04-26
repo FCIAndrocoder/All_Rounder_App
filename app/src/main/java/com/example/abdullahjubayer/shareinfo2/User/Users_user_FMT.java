@@ -24,10 +24,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class Users_user_FMT extends Fragment {
-
     ArrayList<String> nameList=new ArrayList<>();
     ArrayList<String> imageList=new ArrayList<>();
     ArrayList<String> typeList=new ArrayList<>();
+    ArrayList<String> emailList=new ArrayList<>();
+    ArrayList<String> phoneList=new ArrayList<>();
     ListView listView;
 
     public Users_user_FMT() {
@@ -44,14 +45,17 @@ public class Users_user_FMT extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
 
         listView=view.findViewById(R.id.follower_list_id);
-        super.onViewCreated(view, savedInstanceState);
-        String companyName=Home_User_FMT.sharedPreferences.getString("company_name",null);
+        Intent intent=getActivity().getIntent();
+        String companyName=intent.getStringExtra("Company");
         if (companyName.isEmpty()){
             Toast.makeText(getActivity(),"No Follower Found",Toast.LENGTH_LONG).show();
         }else {
             String company=companyName.replaceAll(" ",".");
+
             FirebaseFirestore.getInstance().collection("All_Follower").document(company).collection("Follower")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
@@ -59,9 +63,12 @@ public class Users_user_FMT extends Fragment {
                             for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
                                 String email = snapshot.get("email").toString();
 
+
                                 nameList.clear();
                                 imageList.clear();
                                 typeList.clear();
+                                emailList.clear();
+                                phoneList.clear();
                                 FirebaseFirestore.getInstance().collection("ALL_USER_ACCOUNT").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -73,25 +80,31 @@ public class Users_user_FMT extends Fragment {
                                             String name = doc.get("Name").toString();
                                             String image = doc.get("Picture").toString();
                                             String type = doc.get("Work_At").toString();
+                                            String email = doc.get("Email").toString();
+                                            String phone = doc.get("Mobile").toString();
+
 
 
                                             nameList.add(name);
                                             imageList.add(image);
                                             typeList.add(type);
+                                            emailList.add(email);
+                                            phoneList.add(phone);
                                         }
                                     }
                                 });
 
+
                             }
+
+
                         }
                     });
 
-
-
-
-            FollowerAdapter adapter=new FollowerAdapter(getActivity(),nameList,imageList,typeList);
+            FollowerAdapter adapter=new FollowerAdapter(getActivity(),nameList,imageList,typeList,emailList,phoneList);
             adapter.notifyDataSetChanged();
             listView.setAdapter(adapter);
+
 
         }
 

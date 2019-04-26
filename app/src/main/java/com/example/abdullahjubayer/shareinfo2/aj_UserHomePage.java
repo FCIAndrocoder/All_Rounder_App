@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 
-public class aj_UserHomePage extends AppCompatActivity {
+public class aj_UserHomePage extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     FirebaseFirestore db;
     ArrayList<String>title=new ArrayList<>();
@@ -40,6 +41,7 @@ public class aj_UserHomePage extends AppCompatActivity {
     FirebaseAuth auth;
     SharedPreferences preferences;
     String user_email;
+    aj_User_home_page_Adapter adapter;
 
 
     @Override
@@ -71,6 +73,9 @@ public class aj_UserHomePage extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.aj_user_home, menu);
+        MenuItem menuItem = menu.findItem(R.id.SerchMenuId);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setOnQueryTextListener(this);
         return true;
     }
 
@@ -140,7 +145,7 @@ public class aj_UserHomePage extends AppCompatActivity {
 
                                 }
                                 if (user_email !=null){
-                                    aj_User_home_page_Adapter adapter = new aj_User_home_page_Adapter(getApplicationContext(),title,image,user_email);
+                                    adapter = new aj_User_home_page_Adapter(getApplicationContext(),title,image,user_email);
                                     adapter.notifyDataSetChanged();
                                     listView.setAdapter(adapter);
                                     progressBar.setVisibility(View.INVISIBLE);
@@ -173,6 +178,7 @@ public class aj_UserHomePage extends AppCompatActivity {
 
                 Intent intent=new Intent(aj_UserHomePage.this,Home_User.class);
                 intent.putExtra("Company",title.get(position));
+                intent.putExtra("Image",image.get(position));
                 startActivity(intent);
                 finishActivity(0);
             }
@@ -181,4 +187,14 @@ public class aj_UserHomePage extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        adapter.getFilter().filter(s);
+        return false;
+    }
 }

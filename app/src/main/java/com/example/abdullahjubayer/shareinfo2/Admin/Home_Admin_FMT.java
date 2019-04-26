@@ -197,7 +197,7 @@ public class Home_Admin_FMT extends Fragment {
         newContact.put("Company", collection);
         newContact.put("Company_logo", pic);
 
-        db.collection("All_Home_Page").document("HomePage Of_"+collection).set(newContact)
+        db.collection("All_Home_Page").document(collection).collection("HomePage").document().set(newContact)
 
                 .addOnSuccessListener(new OnSuccessListener< Void >() {
 

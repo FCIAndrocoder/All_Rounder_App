@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">ShareInfo</string>
+    <string name="app_name">All Rounder</string>
+    <string name="channel_name">Notification</string>
+    <string name="channel_description">Chennal</string>
     <string-array name="acc_type">
         <item>Select one</item>
         <item>User</item>
         <item>Admin</item>
     </string-array>
-    <string name="title_activity_home__user">Home_User</string>
+    <string name="title_activity_home__user">Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

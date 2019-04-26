@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -42,6 +43,10 @@ public class Admin_Home_Avt extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setTitle("Admin Home");
+
         setContentView(R.layout.activity_admin__home__avt);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

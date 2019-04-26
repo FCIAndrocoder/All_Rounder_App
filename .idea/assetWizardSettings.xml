@@ -11,26 +11,11 @@
                   <entry key="vectorAssetStep">
                     <value>
                       <PersistentState>
-                        <option name="children">
-                          <map>
-                            <entry key="clipartAsset">
-                              <value>
-                                <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_email_black_24dp.xml" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ffa309" />
-                            <entry key="outputName" value="ic_email_" />
-                            <entry key="sourceFile" value="D:\users.svg" />
+                            <entry key="color" value="30c9ff" />
+                            <entry key="outputName" value="ic_notification_" />
+                            <entry key="sourceFile" value="$USER_HOME$/D:\users.svg" />
                           </map>
                         </option>
                       </PersistentState>

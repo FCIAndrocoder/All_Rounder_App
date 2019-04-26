@@ -57,7 +57,7 @@ public class aj_Splash_activity extends AppCompatActivity {
 
     private void progress_mathed() {
 
-        for (pog_value=1;pog_value<=60;pog_value=pog_value+1) {
+        for (pog_value=1;pog_value<=100;pog_value=pog_value+5) {
             try {
                         Thread.sleep(30);
                         progressBar_counter.setProgress(pog_value);

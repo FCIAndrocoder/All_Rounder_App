@@ -1,5 +1,7 @@
 package com.example.abdullahjubayer.shareinfo2.User;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,12 +23,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.example.abdullahjubayer.shareinfo2.R;
+import com.example.abdullahjubayer.shareinfo2.aj_MainActivity;
+import com.example.abdullahjubayer.shareinfo2.aj_UserHomePage;
 
 public class Home_User extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    SharedPreferences preferences;
+    String user_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,9 @@ public class Home_User extends AppCompatActivity
         tabLayout=findViewById(R.id.tabLayout);
         viewPager=findViewById(R.id.viewPagerId);
         FloatingActionButton fab = findViewById(R.id.fab);
+
+        preferences=this.getSharedPreferences("com.example.abdullahjubayer.shareinfo2",MODE_PRIVATE);
+        user_email=preferences.getString("email",null);
 
 
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_homecolorful));
@@ -162,9 +171,21 @@ public class Home_User extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        switch (id){
+            case R.id.search_barMenuItmId:
+                Intent intent=new Intent(getApplicationContext(), aj_UserHomePage.class);
+                startActivity(intent);
+                break;
+            case R.id.userLogoutId:
+                preferences.edit().clear().apply();
+                Intent i=new Intent(getApplicationContext(), aj_MainActivity.class);
+                startActivity(i);
+                finish();
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);

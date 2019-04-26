@@ -44,8 +44,9 @@
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:text="Services"
-                android:textSize="40dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
                 />
 
 
